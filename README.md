@@ -28,7 +28,7 @@ This is a simple terraform configs, for full description of each entity you can 
 
 `export GOOGLE_APPLICATION_CREDENTIALS=/super-encrypted-volume/project-name-some-hash.json`
 
-4. Create `bucket` with name `state-backet`. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets.
+4. Create `bucket` with name `state-backet`. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
 
 5. Now you need to change values in [amarok.tfvars](./amarok.tfvars) depending on your setup:
 

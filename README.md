@@ -26,68 +26,68 @@ This is a simple terraform configs, for full description of each entity you can 
 
 3. Export your `Service Account` key like this:
 
-`export GOOGLE_APPLICATION_CREDENTIALS=/super-encrypted-volume/project-name-some-hash.json`
+  `export GOOGLE_APPLICATION_CREDENTIALS=/super-encrypted-volume/project-name-some-hash.json`
 
 4. Create `bucket` with name `state-backet`. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
 
 5. Now you need to change values in [amarok.tfvars](./amarok.tfvars) depending on your setup:
 
-**Requried**
+  **Requried**
 
-`project_name`  - should contain yours project name in `GCP`. More info [here](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
+  `project_name`  - should contain yours project name in `GCP`. More info [here](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
 
-`region`        - region for your project. More info [here](https://cloud.google.com/compute/docs/regions-zones)
+  `region`        - region for your project. More info [here](https://cloud.google.com/compute/docs/regions-zones)
 
-**Optional**
+  **Optional**
 
-`network_name`  - name for the network where all instances will be. More info [here](https://cloud.google.com/vpc/docs/vpc)
+  `network_name`  - name for the network where all instances will be. More info [here](https://cloud.google.com/vpc/docs/vpc)
 
-`cloudnat_name` - name for `cloud-nat`. More info [here](https://cloud.google.com/nat/docs/overview)
+  `cloudnat_name` - name for `cloud-nat`. More info [here](https://cloud.google.com/nat/docs/overview)
 
-`source_ranges` - whitelisted ips which can access `share-zone` instances.
+  `source_ranges` - whitelisted ips which can access `share-zone` instances.
 
-`availability_zone_name` - use only region prefixes, like `a`, `b` or `c` More info [here](https://cloud.google.com/compute/docs/regions-zones)
+  `availability_zone_name` - use only region prefixes, like `a`, `b` or `c` More info [here](https://cloud.google.com/compute/docs/regions-zones)
 
-`machine_type`           - machine type, you can test different setups to decide which one is better in terms of price and perfomance. More info [here](https://cloud.google.com/compute/docs/machine-types)
+  `machine_type`           - machine type, you can test different setups to decide which one is better in terms of price and perfomance. More info [here](https://cloud.google.com/compute/docs/machine-types)
 
-`disk_size`              - root disk size.
+  `disk_size`              - root disk size.
 
-`disk_type`              - root disk type, you can also test different setups to decide which one is better in terms of price and perfomance.
+  `disk_type`              - root disk type, you can also test different setups to decide which one is better in terms of price and perfomance.
 
-`image_type`             - boot image. More info [here](https://cloud.google.com/compute/docs/images)
+  `image_type`             - boot image. More info [here](https://cloud.google.com/compute/docs/images)
 
-**Optional(Redis only)**
+  **Optional(Redis only)**
 
-`extended_disk_size`     - size of extended disk for `redis` instance. **Don't forget to mannualy mount this disk!**
+  `extended_disk_size`     - size of extended disk for `redis` instance. **Don't forget to mannualy mount this disk!**
 
-`extended_disk_type`     - type of extended disk for `redis` instance
+  `extended_disk_type`     - type of extended disk for `redis` instance
 
 6. Add your `ssh-keys` [here](./ssh-keys.tf). This ssh-keys will be used for accessing instances via ssh.
 
-```
-variable "ssh_keys" {
-  default = <<EOT
-user_name:ssh-ed25519 user_public_key info_about_key
-user_name_2:ssh-ed25519 user_public_key info_about_key
-EOT
-}
-```
+  ```
+  variable "ssh_keys" {
+    default = <<EOT
+  user_name:ssh-ed25519 user_public_key info_about_key
+  user_name_2:ssh-ed25519 user_public_key info_about_key
+  EOT
+  }
+  ```
 
 7. Init terraform
 
-`terraform init`
+  `terraform init`
 
 8. Apply terraform
 
-`terraform apply -var-file=amarok.tfvars`
+  `terraform apply -var-file=amarok.tfvars`
 
 9. All ip address for instances will be in the terraform output
 
 10. For Destroying infra you can use
 
-`terraform destroy -var-file=amarok.tfvars`
+  `terraform destroy -var-file=amarok.tfvars`
 
-## GCP price
+## GCP prices
 
 [Here](https://cloudpricingcalculator.appspot.com) you can get price for you `GCP` infra.
 

@@ -20,17 +20,17 @@ This is a simple terraform configs, for full description of each entity you can 
 
 # Basic setup
 
-1. Create a `GCP` project.
+- Create a `GCP` project.
 
-2. Get `Service Account` key in `json` format. You can read about `Service Accounts` [here](https://cloud.google.com/iam/docs/creating-managing-service-account-keys). The best way to store `Service Account` key is to use [encfs](https://github.com/vgough/encfs) or [LUKS](https://www.redhat.com/sysadmin/disk-encryption-luks) encrypted volume.
+- Get `Service Account` key in `json` format. You can read about `Service Accounts` [here](https://cloud.google.com/iam/docs/creating-managing-service-account-keys). The best way to store `Service Account` key is to use [encfs](https://github.com/vgough/encfs) or [LUKS](https://www.redhat.com/sysadmin/disk-encryption-luks) encrypted volume.
 
-3. Export your `Service Account` key like this:
+- Export your `Service Account` key like this:
 
   `export GOOGLE_APPLICATION_CREDENTIALS=/super-encrypted-volume/project-name-some-hash.json`
 
-4. Create `bucket` with name `state-backet`. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
+- Create `bucket` with name `state-backet`. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
 
-5. Now you need to change values in [amarok.tfvars](./amarok.tfvars) depending on your setup:
+- Now you need to change values in [amarok.tfvars](./amarok.tfvars) depending on your setup:
 
   **Requried**
 
@@ -62,7 +62,7 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `extended_disk_type`     - type of extended disk for `redis` instance
 
-6. Add your `ssh-keys` [here](./ssh-keys.tf). This ssh-keys will be used for accessing instances via ssh.
+- Add your `ssh-keys` [here](./ssh-keys.tf). This ssh-keys will be used for accessing instances via ssh.
 
   ```
   variable "ssh_keys" {
@@ -73,17 +73,17 @@ This is a simple terraform configs, for full description of each entity you can 
   }
   ```
 
-7. Init terraform
+- Init terraform
 
   `terraform init`
 
-8. Apply terraform
+- Apply terraform
 
   `terraform apply -var-file=amarok.tfvars`
 
-9. All ip address for instances will be in the terraform output
+- All ip address for instances will be in the terraform output
 
-10. For Destroying infra you can use
+- For Destroying infra you can use
 
   `terraform destroy -var-file=amarok.tfvars`
 

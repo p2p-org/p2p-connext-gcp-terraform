@@ -48,7 +48,7 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `source_ranges` - whitelisted ips which can access `share-zone` instances.
 
-  `availability_zone_name` - use only region prefixes, like `a`, `b` or `c` More info [here](https://cloud.google.com/compute/docs/regions-zones)
+  `availability_zone_name` - use only zone prefixes, like `a`, `b` or `c` More info [here](https://cloud.google.com/compute/docs/regions-zones)
 
   `machine_type`           - machine type, you can test different setups to decide which one is better in terms of price and perfomance. More info [here](https://cloud.google.com/compute/docs/machine-types)
 

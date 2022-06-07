@@ -2,7 +2,9 @@
 
 ![plot](docs/pics/arch.jpg)
 
-All instances except `share-zone` will be in the private network. You can use `share-zone` instance like bastion host. Don't use `ForwardAgent=yes` for accessing bastion host instead use it as [jump-box](http://www.linux-magazine.com/Online/Features/Jump-Box-Security) `-J` flag for ssh.
+All instances except `share-zone` will be in the private network. You can use `share-zone` instance like bastion host. 
+
+Don't use `ForwardAgent=yes` for accessing bastion host instead use it as [jump-box](http://www.linux-magazine.com/Online/Features/Jump-Box-Security) `-J` flag for ssh.
 
 You can see all firewall rules [here](modules/amarok/firewall.tf)
 
@@ -46,7 +48,7 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `source_ranges` - whitelisted ips which can access `share-zone` instances.
 
-  `availability_zone_name` - use only region prefixes, like `a`, `b` or `c` More info [here](https://cloud.google.com/compute/docs/regions-zones)
+  `availability_zone_name` - use only zone prefixes, like `a`, `b` or `c` More info [here](https://cloud.google.com/compute/docs/regions-zones)
 
   `machine_type`           - machine type, you can test different setups to decide which one is better in terms of price and perfomance. More info [here](https://cloud.google.com/compute/docs/machine-types)
 

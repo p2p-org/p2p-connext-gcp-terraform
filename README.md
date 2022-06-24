@@ -30,7 +30,9 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `export GOOGLE_APPLICATION_CREDENTIALS=/super-encrypted-volume/project-name-some-hash.json`
 
-- Create `bucket` with name `state-backet`. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
+- Create `bucket` with name like `connext-amarok-testnet-state-bucket`. This name must be globally unique. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
+
+- Update `backend.tf` with your bucket name
 
 - Copy [amarok.tfvars.example](./amarok.tfvars.example) to `amarok.tfvars` and [ssh-keys.tf.example](./ssh-keys.tf.example) to `ssh-keys.tf`
 

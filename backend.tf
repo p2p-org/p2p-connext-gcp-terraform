@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "state-backet"
+    bucket = "connext-amarok-testnet-state-bucket"
     prefix = "env/testnet"
   }
 }

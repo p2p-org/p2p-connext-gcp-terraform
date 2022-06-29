@@ -1,0 +1,38 @@
+project_name  = "connext"
+region        = "europe-west1"
+network_name  = "connext"
+cloudnat_name = "connext"
+source_ranges = ["0.0.0.0/0"]
+
+router_instance = {
+  availability_zone_name = "b"
+  machine_type           = "c2-standard-4"
+  disk_size              = "15"
+  disk_type              = "pd-standard"
+  image_type             = "ubuntu-os-cloud/ubuntu-2004-lts"
+}
+
+redis = {
+  name           = "amarok"
+  tier           = "STANDARD_HA"
+  primary_az     = "b"
+  secondary_az   = "c"
+  redis_version  = "REDIS_6_X"
+  memory_size_gb = 1
+}
+
+sharezone_instance = {
+  availability_zone_name = "b"
+  machine_type           = "e2-small"
+  disk_size              = "15"
+  disk_type              = "pd-standard"
+  image_type             = "ubuntu-os-cloud/ubuntu-2004-lts"
+}
+
+web3signer_instance = {
+  availability_zone_name = "b"
+  machine_type           = "e2-small"
+  disk_size              = "15"
+  disk_type              = "pd-standard"
+  image_type             = "ubuntu-os-cloud/ubuntu-2004-lts"
+}

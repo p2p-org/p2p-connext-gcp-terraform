@@ -6,8 +6,8 @@ output "web3signer-instance-info" {
   value = module.amarok.web3signer-instance-info
 }
 
-output "redis-instance-info" {
-  value = module.amarok.redis-instance-info
+output "redis-info" {
+  value = module.amarok.redis-info
 }
 
 output "router-instance-info" {

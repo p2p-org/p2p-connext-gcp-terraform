@@ -6,7 +6,7 @@
 
 `network.tf` - creating network
 
-`redis_instance.tf` - creating redis instance
+`redis.tf` - creating redis cluster
 
 `router_instance.tf` - creating router instance
 
@@ -17,4 +17,3 @@
 `variables.tf` - variables which module accepts
 
 `outputs.tf` - output instances information
-

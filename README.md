@@ -2,7 +2,7 @@
 
 ![plot](docs/pics/arch.jpg)
 
-All instances except `share-zone` will be in the private network. You can use `share-zone` instance like bastion host. 
+All instances except `share-zone` will be in the private network. You can use `share-zone` instance like bastion host.
 
 Don't use `ForwardAgent=yes` for accessing bastion host instead use it as [jump-box](http://www.linux-magazine.com/Online/Features/Jump-Box-Security) `-J` flag for ssh.
 
@@ -12,9 +12,9 @@ You can see all firewall rules [here](modules/amarok/firewall.tf)
 
 # Basic info
 
-Using this repo you can create infractructe for the [connext router](https://connextscan.io) in the [GCP](https://cloud.google.com/gcp)
+Using this repo you can create infrastructure for the [connext router](https://connextscan.io) in the [GCP](https://cloud.google.com/gcp)
 
-Currenlty only for `amarok testnet`
+Currently only for `amarok testnet`
 
 This is a simple terraform configs, for full description of each entity you can check [this](./modules/amarok/README.md)
 
@@ -30,9 +30,15 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `export GOOGLE_APPLICATION_CREDENTIALS=/super-encrypted-volume/project-name-some-hash.json`
 
-- Create `bucket` with name `state-backet`. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
+- Create `bucket` with name like `connext-amarok-testnet-state-bucket`. This name must be globally unique. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
 
-- Now you need to change values in [amarok.tfvars](./amarok.tfvars) depending on your setup:
+- Update `backend.tf` with your bucket name
+
+- Copy [amarok.tfvars.example](./amarok.tfvars.example) to `amarok.tfvars` and [ssh-keys.tf.example](./ssh-keys.tf.example) to `ssh-keys.tf`
+
+  `cp amarok.tfvars.example amarok.tfvars ; cp ssh-keys.tf.example ssh-keys.tf`
+
+- Now you need to change values in `amarok.tfvars` depending on your setup:
 
   **Requried**
 
@@ -58,13 +64,21 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `image_type`             - boot image. More info [here](https://cloud.google.com/compute/docs/images)
 
-  **Optional(Redis only)**
+  **Optional (Redis)**
 
-  `extended_disk_size`     - size of extended disk for `redis` instance. **Don't forget to mannualy mount this disk!**
+  `name`                   - Redis cluster name
 
-  `extended_disk_type`     - type of extended disk for `redis` instance
+  `tier`                   - HA/non-HA setup. Possible values are `STANDARD_HA` and `BASIC`
 
-- Add your `ssh-keys` [here](./ssh-keys.tf). This ssh-keys will be used for accessing instances via ssh.
+  `primary_az`             - AZ for primary Redis node
+
+  `secondary_az`           - AZ for secondary Redis node
+
+  `redis_version`          - Redis engine version e.g. `REDIS_6_X`
+
+  `memory_size_gb`         - Redis memory size in GB. Can be whole number only.
+
+- Add your SSH keys to`ssh-keys.tf` . These SSH keys will be used for accessing instances via ssh.
 
   ```
   variable "ssh_keys" {
@@ -74,6 +88,8 @@ This is a simple terraform configs, for full description of each entity you can 
   EOT
   }
   ```
+
+- Enable GCP hosted Redis usage [here](https://console.developers.google.com/apis/api/redis.googleapis.com/overview)
 
 - Init terraform
 
@@ -92,4 +108,3 @@ This is a simple terraform configs, for full description of each entity you can 
 ## GCP prices
 
 [Here](https://cloudpricingcalculator.appspot.com) you can get price for you `GCP` infra.
-

@@ -1,4 +1,4 @@
-resource "google_compute_instance" "connext-amarok-router-instance" {
+resource "google_compute_instance" "connext-amarok-bastion-instance" {
   depends_on = [
     google_compute_firewall.connext-amarok-firewall-from-bastion,
     google_compute_firewall.connext-amarok-firewall-router-to-web3signer,
@@ -7,23 +7,28 @@ resource "google_compute_instance" "connext-amarok-router-instance" {
     google_compute_firewall.connext-amarok-firewall-bastion-to-monitoring
   ]
 
-  name         = "${var.router_name}-router"
-  machine_type = var.router_instance.machine_type
-  zone         = "${var.region}-${var.router_instance.availability_zone_name}"
+  name         = "${var.router_name}-bastion"
+  machine_type = var.bastion_instance.machine_type
+  zone         = "${var.region}-${var.bastion_instance.availability_zone_name}"
 
-  tags = ["router"]
+  tags = ["bastion"]
 
   boot_disk {
     initialize_params {
-      image = var.router_instance.image_type
-      type  = var.router_instance.disk_type
-      size  = var.router_instance.disk_size
+      image = var.bastion_instance.image_type
+      type  = var.bastion_instance.disk_type
+      size  = var.bastion_instance.disk_size
     }
   }
 
   network_interface {
     network    = var.network_name
     subnetwork = var.subnetwork == "" ? null : google_compute_subnetwork.connext-amarok-subnetwork[0].id
+
+    access_config {
+      nat_ip = var.static_ip == "" ? null : var.static_ip
+      #     nat_ip = "34.159.188.195"
+    }
   }
 
   allow_stopping_for_update = true

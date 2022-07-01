@@ -1,4 +1,6 @@
-resource "google_compute_instance" "connext-amarok-router-instance" {
+resource "google_compute_instance" "connext-amarok-monitoring-instance" {
+  count = var.use_monitoring_instance ? 1 : 0
+
   depends_on = [
     google_compute_firewall.connext-amarok-firewall-from-bastion,
     google_compute_firewall.connext-amarok-firewall-router-to-web3signer,
@@ -7,17 +9,17 @@ resource "google_compute_instance" "connext-amarok-router-instance" {
     google_compute_firewall.connext-amarok-firewall-bastion-to-monitoring
   ]
 
-  name         = "${var.router_name}-router"
-  machine_type = var.router_instance.machine_type
-  zone         = "${var.region}-${var.router_instance.availability_zone_name}"
+  name         = "${var.router_name}-monitoring"
+  machine_type = var.monitoring_instance.machine_type
+  zone         = "${var.region}-${var.monitoring_instance.availability_zone_name}"
 
-  tags = ["router"]
+  tags = ["monitoring"]
 
   boot_disk {
     initialize_params {
-      image = var.router_instance.image_type
-      type  = var.router_instance.disk_type
-      size  = var.router_instance.disk_size
+      image = var.monitoring_instance.image_type
+      type  = var.monitoring_instance.disk_type
+      size  = var.monitoring_instance.disk_size
     }
   }
 

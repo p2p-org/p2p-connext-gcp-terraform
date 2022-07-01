@@ -1,11 +1,13 @@
 resource "google_compute_instance" "connext-amarok-web3signer-instance" {
   depends_on = [
-    google_compute_firewall.connext-amarok-firewall-basic,
-    google_compute_firewall.connext-amarok-firewall-web3signer,
-    google_compute_firewall.connext-amarok-firewall-sharezone
+    google_compute_firewall.connext-amarok-firewall-from-bastion,
+    google_compute_firewall.connext-amarok-firewall-router-to-web3signer,
+    google_compute_firewall.connext-amarok-firewall-bastion-from-external,
+    google_compute_firewall.connext-amarok-firewall-from-monitoring,
+    google_compute_firewall.connext-amarok-firewall-bastion-to-monitoring
   ]
 
-  name         = "connext-amarok-web3signer"
+  name         = "${var.router_name}-web3signer"
   machine_type = var.web3signer_instance.machine_type
   zone         = "${var.region}-${var.web3signer_instance.availability_zone_name}"
 
@@ -20,8 +22,8 @@ resource "google_compute_instance" "connext-amarok-web3signer-instance" {
   }
 
   network_interface {
-    network = var.network_name
-
+    network    = var.network_name
+    subnetwork = var.subnetwork == "" ? null : google_compute_subnetwork.connext-amarok-subnetwork[0].id
   }
 
   allow_stopping_for_update = true

@@ -1,7 +1,7 @@
-output "share-zone-instance-info" {
+output "bastion-instance-info" {
   value = {
-    "local_address"    = google_compute_instance.connext-amarok-share-zone-instance.network_interface.0.network_ip
-    "external_address" = google_compute_instance.connext-amarok-share-zone-instance.network_interface.0.access_config.0.nat_ip
+    "local_address"    = google_compute_instance.connext-amarok-bastion-instance.network_interface.0.network_ip
+    "external_address" = google_compute_instance.connext-amarok-bastion-instance.network_interface.0.access_config.0.nat_ip
   }
 }
 
@@ -13,7 +13,13 @@ output "web3signer-instance-info" {
 
 output "redis-info" {
   value = {
-    "local_address" = "${google_redis_instance.cache.host}:${google_redis_instance.cache.port}"
+    "local_address" = "${var.use_gcp_memstore ? google_redis_instance.cache[0].host : ""} "
+  }
+}
+
+output "monitoring-instance-info" {
+  value = {
+    "local_address" = "${var.use_monitoring_instance ? google_compute_instance.connext-amarok-monitoring-instance[0].network_interface.0.network_ip : ""} "
   }
 }
 

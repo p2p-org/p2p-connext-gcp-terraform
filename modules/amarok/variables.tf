@@ -1,5 +1,6 @@
 variable "network_name" {
-  type = string
+  type    = string
+  default = "amarok"
 }
 
 variable "region" {
@@ -7,15 +8,33 @@ variable "region" {
 }
 
 variable "cloudnat_name" {
-  type = string
+  type    = string
+  default = "amarok"
 }
 
 variable "source_ranges" {
-  type = list(string)
+  type    = list(string)
+  default = ["0.0.0.0/0"]
 }
 
 variable "ssh_keys" {
-  type = string
+  type    = string
+  default = ""
+}
+
+variable "router_name" {
+  type    = string
+  default = "router"
+}
+
+variable "subnetwork" {
+  type    = string
+  default = ""
+}
+
+variable "use_gcp_memstore" {
+  type    = bool
+  default = false
 }
 
 variable "router_instance" {
@@ -39,7 +58,7 @@ variable "redis" {
   })
 }
 
-variable "sharezone_instance" {
+variable "bastion_instance" {
   type = object({
     availability_zone_name = string
     machine_type           = string

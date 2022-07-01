@@ -9,7 +9,7 @@ resource "google_compute_firewall" "connext-amarok-firewall-basic" {
     ports    = ["22", "9090"]
   }
 
-  source_tags = ["share-zone"]
+  source_tags = ["bastion"]
 }
 
 resource "google_compute_firewall" "connext-amarok-firewall-web3signer" {
@@ -27,10 +27,10 @@ resource "google_compute_firewall" "connext-amarok-firewall-web3signer" {
   target_tags = ["web3signer"]
 }
 
-resource "google_compute_firewall" "connext-amarok-firewall-sharezone" {
+resource "google_compute_firewall" "connext-amarok-firewall-bastion" {
   depends_on = [google_compute_router.connext-amarok-cloudnat-router]
 
-  name    = "${var.network_name}-firewall-sharezone"
+  name    = "${var.network_name}-firewall-bastion"
   network = var.network_name
 
   allow {
@@ -38,6 +38,6 @@ resource "google_compute_firewall" "connext-amarok-firewall-sharezone" {
     ports    = ["22"]
   }
 
-  target_tags   = ["share-zone"]
+  target_tags   = ["bastion"]
   source_ranges = var.source_ranges
 }

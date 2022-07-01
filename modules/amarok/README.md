@@ -10,7 +10,7 @@
 
 `router_instance.tf` - creating router instance
 
-`sharezone_instance.tf` - creating share-zone instance
+`bastion_instance.tf` - creating bastion instance
 
 `web3signer_instance.tf` - creating web3singer instance
 

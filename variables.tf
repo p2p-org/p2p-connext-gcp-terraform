@@ -18,6 +18,18 @@ variable "source_ranges" {
   type = list(string)
 }
 
+variable "router_name" {
+  type = string
+}
+
+variable "subnetwork" {
+  type = string
+}
+
+variable "use_gcp_memstore" {
+  type = string
+}
+
 variable "router_instance" {
   type = object({
     availability_zone_name = string
@@ -39,7 +51,7 @@ variable "redis" {
   })
 }
 
-variable "sharezone_instance" {
+variable "bastion_instance" {
   type = object({
     availability_zone_name = string
     machine_type           = string

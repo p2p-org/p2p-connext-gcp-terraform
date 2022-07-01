@@ -2,7 +2,7 @@
 
 ![plot](docs/pics/arch.jpg)
 
-All instances except `share-zone` will be in the private network. You can use `share-zone` instance like bastion host.
+All instances except `bastion` will be in the private network. You can use `bastion` instance like bastion host.
 
 Don't use `ForwardAgent=yes` for accessing bastion host instead use it as [jump-box](http://www.linux-magazine.com/Online/Features/Jump-Box-Security) `-J` flag for ssh.
 
@@ -30,15 +30,15 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `export GOOGLE_APPLICATION_CREDENTIALS=/super-encrypted-volume/project-name-some-hash.json`
 
-- Create `bucket` with name like `connext-amarok-testnet-state-bucket`. This name must be globally unique. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Don't forget to make bucket private**
+- Create `bucket` with name like `connext-amarok-testnet-state-bucket`. This name must be globally unique. You can use [this](https://cloud.google.com/storage/docs/creating-buckets) guide for creating buckets. **Check that bucket is private**
 
 - Update `backend.tf` with your bucket name
 
-- Copy [amarok.tfvars.example](./amarok.tfvars.example) to `amarok.tfvars` and [ssh-keys.tf.example](./ssh-keys.tf.example) to `ssh-keys.tf`
+- Copy [terraform-secrets.auto.tfvars.example](./terraform-secrets.auto.tfvars.example) to `terraform-secrets.auto.tfvars`, [main.tf.example](./main.tf.example) to `main.tf` and [ssh-keys.tf.example](./ssh-keys.tf.example) to `ssh-keys.tf`
 
-  `cp amarok.tfvars.example amarok.tfvars ; cp ssh-keys.tf.example ssh-keys.tf`
+  `cp terraform-secrets.auto.tfvars.example terraform-secrets.auto.tfvars ; cp main.tf.example main.tf ; cp ssh-keys.tf.example ssh-keys.tf`
 
-- Now you need to change values in `amarok.tfvars` depending on your setup:
+- Now you need to change values in `terraform-secrets.auto.tfvars` depending on your setup:
 
   **Requried**
 
@@ -50,9 +50,13 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `network_name`  - name for the network where all instances will be. More info [here](https://cloud.google.com/vpc/docs/vpc)
 
+  `subnetwork`  - CIDR range for subnetwork. Useful if you have multiple routers. If omitted GCP would use global network subnetwork based on region.
+
   `cloudnat_name` - name for `cloud-nat`. More info [here](https://cloud.google.com/nat/docs/overview)
 
-  `source_ranges` - whitelisted ips which can access `share-zone` instances.
+  `source_ranges` - whitelisted ips which can access `bastion` instances.
+
+  `use_gcp_memstore` - use GCP Memorystore for Redis or not. Disabled by default
 
   `availability_zone_name` - use only zone prefixes, like `a`, `b` or `c` More info [here](https://cloud.google.com/compute/docs/regions-zones)
 
@@ -64,7 +68,9 @@ This is a simple terraform configs, for full description of each entity you can 
 
   `image_type`             - boot image. More info [here](https://cloud.google.com/compute/docs/images)
 
-  **Optional (Redis)**
+  **Optional (GCP Memorystore Redis)**
+
+  Redis can be hosted locally or using GCP Memorystore. GCP Memorystore Redis is disabled by default. To enable it set `use_gcp_memstore` to true
 
   `name`                   - Redis cluster name
 

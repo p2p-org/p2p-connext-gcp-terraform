@@ -1,0 +1,38 @@
+provider "google" {
+  project = var.project_name
+  region  = var.region
+}
+
+module "amarok-main" {
+  source              = "./modules/amarok"
+  router_name         = var.router_name
+  subnetwork          = var.subnetwork
+  use_gcp_memstore    = var.use_gcp_memstore
+  network_name        = "${var.router_name}-${var.network_name}"
+  cloudnat_name       = "${var.router_name}-${var.cloudnat_name}"
+  region              = var.region
+  source_ranges       = var.source_ranges
+  router_instance     = var.router_instance
+  redis               = var.redis
+  bastion_instance    = var.bastion_instance
+  web3signer_instance = var.web3signer_instance
+  ssh_keys            = var.ssh_keys
+}
+
+# Uncomment this to use second router with customized settings
+# In this example we use custom subnetwork and GCP Memorystore Redis
+# module "amarok-custom" {
+#   source              = "./modules/amarok"
+#   router_name         = custom
+#   subnetwork          = "10.132.0.0/16"
+#   use_gcp_memstore    = true
+#   network_name        = "custom-${var.network_name}"
+#   cloudnat_name       = "custom-${var.cloudnat_name}"
+#   region              = var.region
+#   source_ranges       = var.source_ranges
+#   router_instance     = var.router_instance
+#   redis               = var.redis
+#   bastion_instance    = var.bastion_instance
+#   web3signer_instance = var.web3signer_instance
+#   ssh_keys            = var.ssh_keys
+# }

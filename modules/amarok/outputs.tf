@@ -17,6 +17,12 @@ output "redis-info" {
   }
 }
 
+output "monitoring-instance-info" {
+  value = {
+    "local_address" = "${var.use_monitoring_instance ? google_compute_instance.connext-amarok-monitoring-instance[0].network_interface.0.network_ip : ""} "
+  }
+}
+
 output "router-instance-info" {
   value = {
     "local_address" = google_compute_instance.connext-amarok-router-instance.network_interface.0.network_ip

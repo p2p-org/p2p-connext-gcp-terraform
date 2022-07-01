@@ -1,6 +1,6 @@
 variable "network_name" {
   type    = string
-  default = "amarok"
+  default = "connext"
 }
 
 variable "region" {
@@ -9,7 +9,7 @@ variable "region" {
 
 variable "cloudnat_name" {
   type    = string
-  default = "amarok"
+  default = "connext"
 }
 
 variable "source_ranges" {
@@ -18,8 +18,7 @@ variable "source_ranges" {
 }
 
 variable "ssh_keys" {
-  type    = string
-  default = ""
+  type = string
 }
 
 variable "router_name" {
@@ -32,12 +31,32 @@ variable "subnetwork" {
   default = ""
 }
 
+variable "static_ip" {
+  type    = string
+  default = ""
+}
+
 variable "use_gcp_memstore" {
   type    = bool
   default = false
 }
 
+variable "use_monitoring_instance" {
+  type    = string
+  default = false
+}
+
 variable "router_instance" {
+  type = object({
+    availability_zone_name = string
+    machine_type           = string
+    disk_size              = string
+    disk_type              = string
+    image_type             = string
+  })
+}
+
+variable "monitoring_instance" {
   type = object({
     availability_zone_name = string
     machine_type           = string

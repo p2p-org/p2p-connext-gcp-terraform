@@ -1,8 +1,10 @@
 resource "google_compute_instance" "connext-amarok-web3signer-instance" {
   depends_on = [
-    google_compute_firewall.connext-amarok-firewall-basic,
-    google_compute_firewall.connext-amarok-firewall-web3signer,
-    google_compute_firewall.connext-amarok-firewall-bastion
+    google_compute_firewall.connext-amarok-firewall-from-bastion,
+    google_compute_firewall.connext-amarok-firewall-router-to-web3signer,
+    google_compute_firewall.connext-amarok-firewall-bastion-from-external,
+    google_compute_firewall.connext-amarok-firewall-from-monitoring,
+    google_compute_firewall.connext-amarok-firewall-bastion-to-monitoring
   ]
 
   name         = "${var.router_name}-web3signer"

@@ -42,31 +42,35 @@ This is a simple terraform configs, for full description of each entity you can 
 
   **Requried**
 
-  `project_name`  - should contain yours project name in `GCP`. More info [here](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
+  `project_name`  - should contain yours project name in `GCP`. More info [can be found here](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
 
-  `region`        - region for your project. More info [here](https://cloud.google.com/compute/docs/regions-zones)
+  `region`        - region for your project. More info [can be found here](https://cloud.google.com/compute/docs/regions-zones)
 
   **Optional**
 
-  `network_name`  - name for the network where all instances will be. More info [here](https://cloud.google.com/vpc/docs/vpc)
+  `network_name`  - name for the network where all instances will be. More info [can be found here](https://cloud.google.com/vpc/docs/vpc)
 
-  `subnetwork`  - CIDR range for subnetwork. Useful if you have multiple routers. If omitted GCP would use global network subnetwork based on region.
+  `subnetwork`    - CIDR range for subnetwork. Useful if you have multiple routers. If omitted GCP would use global network subnetwork based on region
 
-  `cloudnat_name` - name for `cloud-nat`. More info [here](https://cloud.google.com/nat/docs/overview)
+  `static_ip`     - assign static IP to bastion host. First it [must be reserved here](https://console.cloud.google.com/networking/addresses/list). If not specified, GCP would assign ephemeral external IP address with the same price
 
-  `source_ranges` - whitelisted ips which can access `bastion` instances.
+  `cloudnat_name` - name for `cloud-nat`. More info [can be found here](https://cloud.google.com/nat/docs/overview)
 
-  `use_gcp_memstore` - use GCP Memorystore for Redis or not. Disabled by default
+  `source_ranges` - whitelisted ips which can access `bastion` instances
 
-  `availability_zone_name` - use only zone prefixes, like `a`, `b` or `c` More info [here](https://cloud.google.com/compute/docs/regions-zones)
+  `use_gcp_memstore` - use GCP Memorystore for Redis or not. Disabled by default. If enabled, uncomment output section in `outputs.tf`
 
-  `machine_type`           - machine type, you can test different setups to decide which one is better in terms of price and perfomance. More info [here](https://cloud.google.com/compute/docs/machine-types)
+  `use_monitoring_instance` - create additional monitoring instance. Disabled by default. If enabled, uncomment output section in `outputs.tf`
 
-  `disk_size`              - root disk size.
+  `availability_zone_name` - use only zone prefixes, like `a`, `b` or `c` More info [can be found here](https://cloud.google.com/compute/docs/regions-zones)
 
-  `disk_type`              - root disk type, you can also test different setups to decide which one is better in terms of price and perfomance.
+  `machine_type`           - machine type, you can test different setups to decide which one is better in terms of price and performance. More info [can be found here](https://cloud.google.com/compute/docs/machine-types)
 
-  `image_type`             - boot image. More info [here](https://cloud.google.com/compute/docs/images)
+  `disk_size`              - root disk size
+
+  `disk_type`              - root disk type, you can also test different setups to decide which one is better in terms of price and performance
+
+  `image_type`             - boot image. More info [can be found here](https://cloud.google.com/compute/docs/images)
 
   **Optional (GCP Memorystore Redis)**
 
@@ -103,13 +107,26 @@ This is a simple terraform configs, for full description of each entity you can 
 
 - Apply terraform
 
-  `terraform apply -var-file=amarok.tfvars`
+  `terraform apply`
 
 - All ip address for instances will be in the terraform output
 
 - For Destroying infra you can use
 
-  `terraform destroy -var-file=amarok.tfvars`
+  `terraform destroy`
+
+# Monitoring
+
+  You can use either [GCP Cloud Monitoring](https://cloud.google.com/monitoring/monitor-compute-engine-virtual-machine) or configure your own monitoring system e.g. using Grafana/Prometheus using separate monitoring instance.
+
+  *Monitoring using Grafana/Prometheus*
+
+  First you need to ensure `use_monitoring_instance` is set to `true`, it's `false` by default. Then reapply terraform changes.
+
+  Once monitoring instance is up, install Grafana/Prometheus to it. In firewall rules ports 3000/tcp and 9999/tcp are open for Grafana/Prometheus from bastion instance. All instances have port 9090/tcp open and accessible from monitoring instance. Use SSH port-forwarding from bastion to access Grafana/Prometheus GUI. The following command would create a secured tunnel from localhost:3000 to monitoring_instance:3000, so Grafana can be accessed as `http://localhost:3000`:
+
+  `ssh bastion_instance -L 3000:monitoring_instance:3000`
+
 
 ## GCP prices
 

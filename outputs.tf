@@ -11,6 +11,11 @@ output "main-web3signer-instance-info" {
 #   value = module.amarok-r1.redis-info
 # }
 
+# Uncomment this if you want to use monitoring instance
+# output "main-monitoring-instance-info" {
+#   value = module.amarok-r1.monitoring-instance-info
+# }
+
 output "main-router-instance-info" {
   value = module.amarok-r1.router-instance-info
 }

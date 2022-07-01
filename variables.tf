@@ -26,11 +26,30 @@ variable "subnetwork" {
   type = string
 }
 
+variable "static_ip" {
+  type    = string
+  default = ""
+}
+
 variable "use_gcp_memstore" {
   type = string
 }
 
+variable "use_monitoring_instance" {
+  type = string
+}
+
 variable "router_instance" {
+  type = object({
+    availability_zone_name = string
+    machine_type           = string
+    disk_size              = string
+    disk_type              = string
+    image_type             = string
+  })
+}
+
+variable "monitoring_instance" {
   type = object({
     availability_zone_name = string
     machine_type           = string

@@ -1,4 +1,6 @@
 **/.terraform/*
 **/.terraform.lock.hcl
 *.tfvars
+*_custom.tf
+main.tf
 ssh-keys.tf

@@ -1,3 +1,9 @@
+output "nat-info" {
+  value = {
+    "external_address" = google_compute_address.nat[0].address
+  }
+}
+
 output "bastion-instance-info" {
   value = {
     "local_address"    = google_compute_instance.connext-amarok-bastion-instance.network_interface.0.network_ip
@@ -7,7 +13,7 @@ output "bastion-instance-info" {
 
 output "web3signer-instance-info" {
   value = {
-    "local_address" = google_compute_instance.connext-amarok-web3signer-instance.network_interface.0.network_ip
+    "local_address" = "${var.use_web3signer_instance ? google_compute_instance.connext-amarok-web3signer-instance[0].network_interface.0.network_ip : ""} "
   }
 }
 

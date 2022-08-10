@@ -8,14 +8,17 @@ variable "region" {
 
 variable "network_name" {
   type = string
+  default = "amarok"
 }
 
 variable "cloudnat_name" {
   type = string
+  default = "amarok"
 }
 
 variable "source_ranges" {
   type = list(string)
+  default = ["0.0.0.0/0"]
 }
 
 variable "router_name" {
@@ -24,19 +27,32 @@ variable "router_name" {
 
 variable "subnetwork" {
   type = string
+  default = ""
 }
 
-variable "static_ip" {
+variable "bastion_static_ip" {
+  type    = string
+  default = ""
+}
+
+variable "nat_static_ip" {
   type    = string
   default = ""
 }
 
 variable "use_gcp_memstore" {
   type = string
+  default = false
 }
 
 variable "use_monitoring_instance" {
   type = string
+  default = false
+}
+
+variable "use_web3signer_instance" {
+  type = string
+  default = false
 }
 
 variable "router_instance" {

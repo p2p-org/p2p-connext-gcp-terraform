@@ -1,10 +1,6 @@
 resource "google_compute_instance" "connext-amarok-router-instance" {
   depends_on = [
-    google_compute_firewall.connext-amarok-firewall-from-bastion,
-    google_compute_firewall.connext-amarok-firewall-router-to-web3signer,
-    google_compute_firewall.connext-amarok-firewall-bastion-from-external,
-    google_compute_firewall.connext-amarok-firewall-from-monitoring,
-    google_compute_firewall.connext-amarok-firewall-bastion-to-monitoring
+    google_compute_firewall.connext-amarok-firewall-from-bastion
   ]
 
   name         = "${var.router_name}-router"
@@ -27,6 +23,13 @@ resource "google_compute_instance" "connext-amarok-router-instance" {
   }
 
   allow_stopping_for_update = true
+
+  shielded_instance_config{
+    enable_secure_boot          = true
+    enable_vtpm                 = true
+    enable_integrity_monitoring = true
+  }
+
 
   metadata = {
     "ssh-keys" = "${var.ssh_keys}"

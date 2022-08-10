@@ -1,10 +1,7 @@
 resource "google_compute_instance" "connext-amarok-bastion-instance" {
   depends_on = [
     google_compute_firewall.connext-amarok-firewall-from-bastion,
-    google_compute_firewall.connext-amarok-firewall-router-to-web3signer,
-    google_compute_firewall.connext-amarok-firewall-bastion-from-external,
-    google_compute_firewall.connext-amarok-firewall-from-monitoring,
-    google_compute_firewall.connext-amarok-firewall-bastion-to-monitoring
+    google_compute_firewall.connext-amarok-firewall-bastion-from-external
   ]
 
   name         = "${var.router_name}-bastion"
@@ -26,12 +23,18 @@ resource "google_compute_instance" "connext-amarok-bastion-instance" {
     subnetwork = var.subnetwork == "" ? null : google_compute_subnetwork.connext-amarok-subnetwork[0].id
 
     access_config {
-      nat_ip = var.static_ip == "" ? null : var.static_ip
-      #     nat_ip = "34.159.188.195"
+      nat_ip = var.bastion_static_ip == "" ? null : var.bastion_static_ip
     }
   }
 
   allow_stopping_for_update = true
+
+
+  shielded_instance_config{
+    enable_secure_boot          = true
+    enable_vtpm                 = true
+    enable_integrity_monitoring = true
+  }
 
   metadata = {
     "ssh-keys" = "${var.ssh_keys}"

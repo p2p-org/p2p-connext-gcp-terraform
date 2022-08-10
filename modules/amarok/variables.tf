@@ -31,7 +31,12 @@ variable "subnetwork" {
   default = ""
 }
 
-variable "static_ip" {
+variable "bastion_static_ip" {
+  type    = string
+  default = ""
+}
+
+variable "nat_static_ip" {
   type    = string
   default = ""
 }
@@ -42,6 +47,11 @@ variable "use_gcp_memstore" {
 }
 
 variable "use_monitoring_instance" {
+  type    = string
+  default = false
+}
+
+variable "use_web3signer_instance" {
   type    = string
   default = false
 }

@@ -36,7 +36,7 @@ resource "google_compute_firewall" "connext-amarok-firewall-router-is-monitoring
 
   allow {
     protocol = "tcp"
-    ports    = ["9090","3000"]
+    ports    = ["3000", "9090",  "9093"] #enable port forwarding for Grafana, Prometheus, Alertmanager if router is combined with monitoring
   }
 
   source_tags = ["bastion"]
@@ -68,10 +68,26 @@ resource "google_compute_firewall" "connext-amarok-firewall-from-monitoring" {
 
   allow {
     protocol = "tcp"
-    ports    = ["9090"]
+    ports    = ["9100", "10080", "8080"]  #monitor node-exporter, cadvisor, router
   }
 
   source_tags = ["monitoring"]
+}
+
+resource "google_compute_firewall" "connext-amarok-firewall-from-router-to-monitoring" {
+  count      = var.use_monitoring_instance ? 1 : 0
+  depends_on = [google_compute_router.connext-amarok-cloudnat-router]
+
+  name    = "${var.network_name}-from-router-to-monitoring"
+  network = var.network_name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["3100"]  #enable loki access from router
+  }
+
+  source_tags = ["router"]
+  target_tags = ["monitoring"]
 }
 
 resource "google_compute_firewall" "connext-amarok-firewall-bastion-to-monitoring" {
@@ -83,7 +99,7 @@ resource "google_compute_firewall" "connext-amarok-firewall-bastion-to-monitorin
 
   allow {
     protocol = "tcp"
-    ports    = ["3000", "9999"]
+    ports    = ["3000", "9090",  "9093"] #enable port forwarding for Grafana, Prometheus, Alertmanager
   }
 
   source_tags = ["bastion"]

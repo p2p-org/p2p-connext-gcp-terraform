@@ -23,6 +23,7 @@ resource "google_compute_instance" "connext-amarok-monitoring-instance" {
   network_interface {
     network    = var.network_name
     subnetwork = var.subnetwork == "" ? null : google_compute_subnetwork.connext-amarok-subnetwork[0].id
+    network_ip = var.monitoring_ip == "" ? null : var.monitoring_ip
   }
 
   allow_stopping_for_update = true

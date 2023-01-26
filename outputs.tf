@@ -1,14 +1,14 @@
-output "main-nat-info" {
-  value = module.amarok-r1.nat-info
-}
-
-output "main-bastion-instance-info" {
-  value = module.amarok-r1.bastion-instance-info
-}
-
-output "main-router-instance-info" {
-  value = module.amarok-r1.router-instance-info
-}
+# output "main-nat-info" {
+#   value = module.amarok-r1.nat-info
+# }
+#
+# output "main-bastion-instance-info" {
+#   value = module.amarok-r1.bastion-instance-info
+# }
+#
+# output "main-router-instance-info" {
+#   value = module.amarok-r1.router-instance-info
+# }
 
 # Uncomment this if you want to use monitoring instance
 # output "main-web3signer-instance-info" {

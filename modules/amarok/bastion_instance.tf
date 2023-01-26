@@ -21,6 +21,7 @@ resource "google_compute_instance" "connext-amarok-bastion-instance" {
   network_interface {
     network    = var.network_name
     subnetwork = var.subnetwork == "" ? null : google_compute_subnetwork.connext-amarok-subnetwork[0].id
+    network_ip = var.bastion_ip == "" ? null : var.bastion_ip
 
     access_config {
       nat_ip = var.bastion_static_ip == "" ? null : var.bastion_static_ip

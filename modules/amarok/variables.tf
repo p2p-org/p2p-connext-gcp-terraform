@@ -41,6 +41,21 @@ variable "nat_static_ip" {
   default = ""
 }
 
+variable "bastion_ip" {
+  type    = string
+  default = ""
+}
+
+variable "router_ip" {
+  type    = string
+  default = ""
+}
+
+variable "monitoring_ip" {
+  type    = string
+  default = ""
+}
+
 variable "use_gcp_memstore" {
   type    = bool
   default = false

@@ -68,7 +68,7 @@ resource "google_compute_firewall" "connext-amarok-firewall-from-monitoring" {
 
   allow {
     protocol = "tcp"
-    ports    = ["9100", "10080", "8080"]  #monitor node-exporter, cadvisor, router
+    ports    = ["9100", "10080", "8080", "9998","9999"]  #monitor node-exporter, cadvisor, router, exporter CR, exporter router
   }
 
   source_tags = ["monitoring"]

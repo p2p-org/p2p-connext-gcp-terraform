@@ -1,7 +1,7 @@
 resource "google_redis_instance" "cache" {
   count                   = var.use_gcp_memstore ? 1 : 0
-  name                    = "${var.router_name}-${var.redis.name}"
-  display_name            = "${var.router_name}-${var.redis.name}"
+  name                    = "${var.module_name}-${var.redis.name}"
+  display_name            = "${var.module_name}-${var.redis.name}"
   tier                    = var.redis.tier
   memory_size_gb          = var.redis.memory_size_gb
   redis_version           = var.redis.redis_version

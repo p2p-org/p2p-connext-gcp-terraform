@@ -21,9 +21,19 @@ variable "ssh_keys" {
   type = string
 }
 
-variable "router_name" {
+variable "module_name" {
   type    = string
   default = "router"
+}
+
+variable "routers" {
+  type = map(object({
+    name               = string
+    router_ip          = optional(string)
+  }))
+
+  default     = {}
+  description = "List of routers and its settings"
 }
 
 variable "subnetwork" {
@@ -46,10 +56,10 @@ variable "bastion_ip" {
   default = ""
 }
 
-variable "router_ip" {
-  type    = string
-  default = ""
-}
+# variable "router_ip" {
+#   type    = string
+#   default = ""
+# }
 
 variable "monitoring_ip" {
   type    = string

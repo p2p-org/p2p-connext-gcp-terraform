@@ -21,10 +21,6 @@ variable "source_ranges" {
   default = ["0.0.0.0/0"]
 }
 
-variable "router_name" {
-  type = string
-}
-
 variable "subnetwork" {
   type = string
   default = ""
@@ -53,6 +49,27 @@ variable "use_monitoring_instance" {
 variable "use_web3signer_instance" {
   type = string
   default = false
+}
+
+variable "mainnet" {
+  type = object({
+    name               = string
+    subnetwork         = string
+    bastion_static_ip  = string
+    nat_static_ip      = string
+    bastion_ip         = optional(string)
+    monitoring_ip      = optional(string)
+  })
+}
+
+variable "routers" {
+  type = map(object({
+    name               = string
+    router_ip          = optional(string)
+  }))
+
+  default     = {}
+  description = "List of routers and its settings"
 }
 
 variable "router_instance" {

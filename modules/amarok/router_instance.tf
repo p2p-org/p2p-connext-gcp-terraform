@@ -3,7 +3,9 @@ resource "google_compute_instance" "connext-amarok-router-instance" {
     google_compute_firewall.connext-amarok-firewall-from-bastion
   ]
 
-  name         = "${var.router_name}-router"
+  for_each = var.routers
+
+  name         = "${each.value.name}-router"
   machine_type = var.router_instance.machine_type
   zone         = "${var.region}-${var.router_instance.availability_zone_name}"
 
@@ -20,7 +22,7 @@ resource "google_compute_instance" "connext-amarok-router-instance" {
   network_interface {
     network    = var.network_name
     subnetwork = var.subnetwork == "" ? null : google_compute_subnetwork.connext-amarok-subnetwork[0].id
-    network_ip = var.router_ip == "" ? null : var.router_ip
+    network_ip = each.value.router_ip == "" ? null : each.value.router_ip
   }
 
   allow_stopping_for_update = true

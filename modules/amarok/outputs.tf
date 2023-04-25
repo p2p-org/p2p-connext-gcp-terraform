@@ -29,8 +29,8 @@ output "monitoring-instance-info" {
   }
 }
 
-output "router-instance-info" {
-  value = {
-    "local_address" = google_compute_instance.connext-amarok-router-instance.network_interface.0.network_ip
-  }
-}
+# output "router-instance-info" {
+  # value = {
+  #   "local_address" = google_compute_instance.connext-amarok-router-instance[each.key].network_interface.0.network_ip
+  # }
+# }

@@ -6,7 +6,7 @@ resource "google_compute_instance" "connext-amarok-monitoring-instance" {
     google_compute_firewall.connext-amarok-firewall-bastion-to-monitoring
   ]
 
-  name         = "${var.router_name}-monitoring"
+  name         = "${var.module_name}-monitoring"
   machine_type = var.monitoring_instance.machine_type
   zone         = "${var.region}-${var.monitoring_instance.availability_zone_name}"
 

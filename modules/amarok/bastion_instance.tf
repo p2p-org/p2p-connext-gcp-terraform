@@ -4,7 +4,7 @@ resource "google_compute_instance" "connext-amarok-bastion-instance" {
     google_compute_firewall.connext-amarok-firewall-bastion-from-external
   ]
 
-  name         = "${var.router_name}-bastion"
+  name         = "${var.module_name}-bastion"
   machine_type = var.bastion_instance.machine_type
   zone         = "${var.region}-${var.bastion_instance.availability_zone_name}"
 

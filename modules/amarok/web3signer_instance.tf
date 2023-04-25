@@ -5,7 +5,7 @@ resource "google_compute_instance" "connext-amarok-web3signer-instance" {
     google_compute_firewall.connext-amarok-firewall-router-to-web3signer
   ]
 
-  name         = "${var.router_name}-web3signer"
+  name         = "${var.module_name}-web3signer"
   machine_type = var.web3signer_instance.machine_type
   zone         = "${var.region}-${var.web3signer_instance.availability_zone_name}"
 

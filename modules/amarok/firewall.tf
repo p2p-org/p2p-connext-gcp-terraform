@@ -20,7 +20,7 @@ resource "google_compute_firewall" "connext-amarok-firewall-bastion-from-externa
 
   allow {
     protocol = "tcp"
-    ports    = ["22"]
+    ports    = ["22", "43001"]
   }
 
   target_tags   = ["bastion"]

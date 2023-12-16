@@ -27,6 +27,7 @@ resource "google_compute_instance" "connext-amarok-monitoring-instance" {
   }
 
   allow_stopping_for_update = true
+  enable_display            = true
 
   shielded_instance_config{
     enable_secure_boot          = true
@@ -36,5 +37,6 @@ resource "google_compute_instance" "connext-amarok-monitoring-instance" {
 
   metadata = {
     "ssh-keys" = "${var.ssh_keys}"
+    "serial-port-enable" = "true" 
   }
 }
